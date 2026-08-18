@@ -1,0 +1,14 @@
+﻿bin/
+obj/
+*.user
+appsettings.Development.json
+appsettings.Local.json
+node_modules/
+dist/
+.env
+.env.local
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
