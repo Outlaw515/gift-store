@@ -38,7 +38,7 @@ function App() {
 
   return (
     <div>
-      <h1>Gift Store</h1>
+      <h1>ROSA Store</h1>
       <ul>
         {products.map((product) => (
           <li key={product.id}>
