@@ -28,12 +28,12 @@ function ProductList() {
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  return (
-    <ul>
+    return (
+    <div className="product-grid">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-    </ul>
+    </div>
   );
 }
 
