@@ -24,7 +24,7 @@ function Header() {
           <span>اتصل بنا</span>
         </nav>
         <div className="logo-wrap">
-          <img src="/src/assets/logo.png" alt="ROSA Gift Store" className="logo" />
+         <img src="/src/assets/logo.jpg" alt="ROSA Gift Store" className="logo" />
         </div>
         <div className="header-search">
           <input type="text" placeholder="ابحث عن منتج..." />

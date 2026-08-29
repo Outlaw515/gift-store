@@ -2,7 +2,7 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-col">
-        <img src="/src/assets/logo.png" alt="ROSA" className="footer-logo" />
+        <img src="/src/assets/logo.jpg" alt="ROSA" className="footer-logo" />
         <p>نحن في روزا نؤمن أن الهدية ليست مجرد شيء، بل رسالة من القلب</p>
       </div>
       <div className="footer-col">
