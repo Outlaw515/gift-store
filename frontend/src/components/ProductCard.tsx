@@ -1,13 +1,21 @@
 import type { Product } from '../types/Product';
-import { MessageCircle } from 'lucide-react';
-import { getWhatsAppLink } from '../config';
+import { ShoppingCart, Check, Heart } from 'lucide-react';
+import { useCart } from '../context/CartContext';
+import { useState } from 'react';
 
 interface ProductCardProps {
   product: Product;
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const message = `مرحباً، أنا مهتم بمنتج: ${product.name} - $${product.price}`;
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  function handleAddToCart() {
+    addToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   return (
     <div className="product-card">
@@ -17,22 +25,19 @@ function ProductCard({ product }: ProductCardProps) {
         ) : (
           <span>No Image</span>
         )}
+        <button className="wishlist-btn" title="أضف للمفضلة">
+          <Heart size={16} />
+        </button>
       </div>
       <h3>{product.name}</h3>
-      <p className="product-description">{product.description}</p>
       <div className="product-footer">
-        <span className="product-price">${product.price}</span>
-        <a
-          href={getWhatsAppLink(message)}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="whatsapp-icon"
-          title="اطلب عبر واتساب"
-        >
-          <MessageCircle size={20} />
-        </a>
+        <button onClick={handleAddToCart} className="add-to-cart-btn" title="أضف للسلة">
+          {added ? <Check size={18} /> : <ShoppingCart size={18} />}
+          <span>أضف للسلة</span>
+        </button>
       </div>
     </div>
   );
 }
+
 export default ProductCard;
