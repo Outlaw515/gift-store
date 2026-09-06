@@ -28,7 +28,8 @@ public class ProductsController : ControllerBase
                 Description = p.Description,
                 Price = p.Price,
                 StockQuantity = p.StockQuantity,
-                ImageUrl = p.ImageUrl
+                ImageUrl = p.ImageUrl,
+                Category = p.Category
             })
             .ToListAsync();
 
@@ -46,6 +47,7 @@ public class ProductsController : ControllerBase
             Price = dto.Price,
             StockQuantity = dto.StockQuantity,
             ImageUrl = dto.ImageUrl,
+            Category = dto.Category,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -73,7 +75,8 @@ public class ProductsController : ControllerBase
             Description = product.Description,
             Price = product.Price,
             StockQuantity = product.StockQuantity,
-            ImageUrl = product.ImageUrl
+            ImageUrl = product.ImageUrl,
+            Category = product.Category
         };
 
         return Ok(dto);
@@ -94,6 +97,7 @@ public class ProductsController : ControllerBase
         product.Price = dto.Price;
         product.StockQuantity = dto.StockQuantity;
         product.ImageUrl = dto.ImageUrl;
+        product.Category = dto.Category;
 
         await _context.SaveChangesAsync();
 
@@ -115,4 +119,4 @@ public class ProductsController : ControllerBase
 
         return NoContent();
     }
-    }
+}

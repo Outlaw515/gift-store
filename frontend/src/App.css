@@ -147,6 +147,11 @@ body {
   cursor: pointer;
 }
 
+.hero-btn {
+  text-decoration: none;
+  display: inline-block;
+}
+
 .hero-image img {
   max-width: 260px;
   width: 100%;
