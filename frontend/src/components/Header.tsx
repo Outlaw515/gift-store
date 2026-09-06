@@ -1,4 +1,5 @@
 import { ShoppingCart, Search, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
 function Header() {
@@ -18,13 +19,15 @@ function Header() {
           <User size={20} />
         </div>
         <nav className="header-nav">
-          <span className="active">الرئيسية</span>
-          <span>الهدايا المخصصة</span>
-          <span>من نحن</span>
-          <span>اتصل بنا</span>
+          <Link to="/">الرئيسية</Link>
+          <Link to="/custom-gifts">الهدايا المخصصة</Link>
+          <Link to="/about">من نحن</Link>
+          <Link to="/contact">اتصل بنا</Link>
         </nav>
         <div className="logo-wrap">
-         <img src="/src/assets/logo.jpg" alt="ROSA Gift Store" className="logo" />
+          <Link to="/">
+            <img src="/src/assets/logo.jpg" alt="ROSA Gift Store" className="logo" />
+          </Link>
         </div>
         <div className="header-search">
           <input type="text" placeholder="ابحث عن منتج..." />
