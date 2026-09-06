@@ -9,6 +9,7 @@ import CartButton from './components/CartButton';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import CustomGiftsPage from './pages/CustomGiftsPage';
+import AdminPage from './pages/AdminPage';
 import './App.css';
 
 function HomePage() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/custom-gifts" element={<CustomGiftsPage />} />
+        <Route path="/admin" element={<AdminPage />} />  
         </Routes>
       </main>
       <Footer />
