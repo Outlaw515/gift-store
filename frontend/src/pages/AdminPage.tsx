@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
 function AdminPage() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -38,6 +40,28 @@ function AdminPage() {
     }
   }
 
+    if (!authenticated) {
+    return (
+      <div className="static-page">
+        <h2>دخول الإدارة</h2>
+        <input
+          type="password"
+          placeholder="كلمة المرور"
+          value={passwordInput}
+          onChange={(e) => setPasswordInput(e.target.value)}
+        />
+        <button
+          onClick={() => {
+            if (passwordInput === 'rosa2026') setAuthenticated(true);
+          }}
+          className="admin-submit-btn"
+          style={{ marginRight: '0.5rem' }}
+        >
+          دخول
+        </button>
+      </div>
+    );
+  }
   return (
     <div className="static-page">
       <h2>إضافة منتج جديد</h2>
