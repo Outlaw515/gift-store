@@ -8,6 +8,7 @@ function AdminPage() {
   const [price, setPrice] = useState('');
   const [stockQuantity, setStockQuantity] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [category, setCategory] = useState('هدايا جاهزة');
   const [message, setMessage] = useState('');
 
   async function handleSubmit(e: React.FormEvent) {
@@ -24,6 +25,7 @@ function AdminPage() {
           price: parseFloat(price),
           stockQuantity: parseInt(stockQuantity),
           imageUrl: imageUrl || null,
+          category,
         }),
       });
 
@@ -35,12 +37,13 @@ function AdminPage() {
       setPrice('');
       setStockQuantity('');
       setImageUrl('');
+      setCategory('هدايا جاهزة');
     } catch {
       setMessage('حدث خطأ، حاول مرة أخرى');
     }
   }
 
-    if (!authenticated) {
+  if (!authenticated) {
     return (
       <div className="static-page">
         <h2>دخول الإدارة</h2>
@@ -62,6 +65,7 @@ function AdminPage() {
       </div>
     );
   }
+
   return (
     <div className="static-page">
       <h2>إضافة منتج جديد</h2>
@@ -85,6 +89,15 @@ function AdminPage() {
         <label>
           رابط الصورة (اختياري)
           <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." />
+        </label>
+        <label>
+          الفئة
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="هدايا جاهزة">هدايا جاهزة</option>
+            <option value="باقات الورد">باقات الورد</option>
+            <option value="العطور">العطور</option>
+            <option value="الشوكولاتة">الشوكولاتة</option>
+          </select>
         </label>
         <button type="submit" className="admin-submit-btn">إضافة المنتج</button>
       </form>

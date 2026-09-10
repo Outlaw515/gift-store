@@ -1,4 +1,5 @@
 import { Gift, Flower2, SprayCan, Package } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const categories = [
   { name: 'هدايا جاهزة', icon: Gift },
@@ -13,7 +14,7 @@ function CategoryGrid() {
       {categories.map((cat) => {
         const Icon = cat.icon;
         return (
-          <div className="category-card" key={cat.name}>
+          <Link to={`/shop?category=${encodeURIComponent(cat.name)}`} className="category-card" key={cat.name}>
             <div className="category-icon">
               <Icon size={22} />
             </div>
@@ -21,7 +22,7 @@ function CategoryGrid() {
               <h4>{cat.name}</h4>
               <span>تسوق الآن</span>
             </div>
-          </div>
+          </Link>
         );
       })}
     </section>

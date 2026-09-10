@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import type { Product } from '../types/Product';
 import ProductCard from './ProductCard';
 
-function ProductList() {
+interface ProductListProps {
+  category?: string;
+}
+
+function ProductList({ category }: ProductListProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -28,9 +32,17 @@ function ProductList() {
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
-    return (
+  const filtered = category
+    ? products.filter((p) => p.category === category)
+    : products;
+
+  if (filtered.length === 0) {
+    return <p className="no-products">لا توجد منتجات في هذه الفئة حالياً</p>;
+  }
+
+  return (
     <div className="product-grid">
-      {products.map((product) => (
+      {filtered.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
     </div>
