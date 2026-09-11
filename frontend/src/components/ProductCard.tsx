@@ -1,5 +1,5 @@
 import type { Product } from '../types/Product';
-import { ShoppingCart, Check, Heart } from 'lucide-react';
+import { ShoppingCart, Check, Heart, Gift } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
 
@@ -20,10 +20,15 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="product-card">
       <div className="product-image-placeholder">
+        {product.category && (
+          <span className="category-badge">{product.category}</span>
+        )}
         {product.imageUrl ? (
           <img src={product.imageUrl} alt={product.name} />
         ) : (
-          <span>No Image</span>
+          <div className="no-image-placeholder">
+            <Gift size={40} />
+          </div>
         )}
         <button className="wishlist-btn" title="أضف للمفضلة">
           <Heart size={16} />

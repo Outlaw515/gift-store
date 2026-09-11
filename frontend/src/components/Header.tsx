@@ -1,14 +1,24 @@
-import { ShoppingCart, Search, User } from 'lucide-react';
+import { ShoppingCart, User, Search, MessageCircle, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { getWhatsAppLink, getInstagramLink } from '../config';
 
 function Header() {
   const { totalItems } = useCart();
+  const generalMessage = 'مرحباً، عندي فكرة هدية خاصة أبي أستفسر عنها';
 
   return (
     <header className="site-header">
       <div className="header-top">
         <span>توصيل داخل مدينة تريم</span>
+        <div className="header-top-icons">
+          <a href={getWhatsAppLink(generalMessage)} target="_blank" rel="noopener noreferrer" title="واتساب">
+            <MessageCircle size={16} />
+          </a>
+          <a href={getInstagramLink()} target="_blank" rel="noopener noreferrer" title="انستقرام">
+            <Camera size={16} />
+          </a>
+        </div>
       </div>
       <div className="header-main">
         <div className="header-icons">
@@ -17,9 +27,11 @@ function Header() {
             {totalItems > 0 && <span className="cart-mini-badge">{totalItems}</span>}
           </div>
           <User size={20} />
+          <Search size={20} />
         </div>
         <nav className="header-nav">
           <Link to="/">الرئيسية</Link>
+          <Link to="/shop">المتجر</Link>
           <Link to="/custom-gifts">الهدايا المخصصة</Link>
           <Link to="/about">من نحن</Link>
           <Link to="/contact">اتصل بنا</Link>
@@ -28,10 +40,6 @@ function Header() {
           <Link to="/">
             <img src="/src/assets/logo.jpg" alt="ROSA Gift Store" className="logo" />
           </Link>
-        </div>
-        <div className="header-search">
-          <input type="text" placeholder="ابحث عن منتج..." />
-          <Search size={18} />
         </div>
       </div>
     </header>

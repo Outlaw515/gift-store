@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import type { Product } from '../types/Product';
+
+const API_URL = 'http://localhost:5144/api/products';
 
 function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
@@ -11,33 +17,79 @@ function AdminPage() {
   const [category, setCategory] = useState('هدايا جاهزة');
   const [message, setMessage] = useState('');
 
+  useEffect(() => {
+    if (authenticated) loadProducts();
+  }, [authenticated]);
+
+  function loadProducts() {
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data: Product[]) => setProducts(data))
+      .catch(() => setMessage('فشل تحميل المنتجات'));
+  }
+
+  function resetForm() {
+    setEditingId(null);
+    setName('');
+    setDescription('');
+    setPrice('');
+    setStockQuantity('');
+    setImageUrl('');
+    setCategory('هدايا جاهزة');
+  }
+
+  function startEdit(product: Product) {
+    setEditingId(product.id);
+    setName(product.name);
+    setDescription(product.description);
+    setPrice(String(product.price));
+    setStockQuantity(String(product.stockQuantity));
+    setImageUrl(product.imageUrl || '');
+    setCategory(product.category || 'هدايا جاهزة');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function handleDelete(id: string) {
+    if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error();
+      setMessage('تم حذف المنتج بنجاح');
+      loadProducts();
+    } catch {
+      setMessage('حدث خطأ أثناء الحذف');
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setMessage('');
 
+    const payload = {
+      name,
+      description,
+      price: parseFloat(price),
+      stockQuantity: parseInt(stockQuantity),
+      imageUrl: imageUrl || null,
+      category,
+    };
+
     try {
-      const response = await fetch('http://localhost:5144/api/products', {
-        method: 'POST',
+      const url = editingId ? `${API_URL}/${editingId}` : API_URL;
+      const method = editingId ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          description,
-          price: parseFloat(price),
-          stockQuantity: parseInt(stockQuantity),
-          imageUrl: imageUrl || null,
-          category,
-        }),
+        body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error('فشل إضافة المنتج');
+      if (!response.ok) throw new Error();
 
-      setMessage('تمت إضافة المنتج بنجاح');
-      setName('');
-      setDescription('');
-      setPrice('');
-      setStockQuantity('');
-      setImageUrl('');
-      setCategory('هدايا جاهزة');
+      setMessage(editingId ? 'تم تعديل المنتج بنجاح' : 'تمت إضافة المنتج بنجاح');
+      resetForm();
+      loadProducts();
     } catch {
       setMessage('حدث خطأ، حاول مرة أخرى');
     }
@@ -68,7 +120,7 @@ function AdminPage() {
 
   return (
     <div className="static-page">
-      <h2>إضافة منتج جديد</h2>
+      <h2>{editingId ? 'تعديل منتج' : 'إضافة منتج جديد'}</h2>
       <form onSubmit={handleSubmit} className="admin-form">
         <label>
           اسم المنتج
@@ -99,9 +151,34 @@ function AdminPage() {
             <option value="الشوكولاتة">الشوكولاتة</option>
           </select>
         </label>
-        <button type="submit" className="admin-submit-btn">إضافة المنتج</button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button type="submit" className="admin-submit-btn">
+            {editingId ? 'حفظ التعديلات' : 'إضافة المنتج'}
+          </button>
+          {editingId && (
+            <button type="button" onClick={resetForm} className="admin-cancel-btn">
+              إلغاء
+            </button>
+          )}
+        </div>
       </form>
       {message && <p className="admin-message">{message}</p>}
+
+      <h2 style={{ marginTop: '2rem' }}>المنتجات الحالية ({products.length})</h2>
+      <div className="admin-product-list">
+        {products.map((product) => (
+          <div className="admin-product-row" key={product.id}>
+            <div className="admin-product-info">
+              <strong>{product.name}</strong>
+              <span>{product.category || 'بدون فئة'} — ${product.price}</span>
+            </div>
+            <div className="admin-product-actions">
+              <button onClick={() => startEdit(product)} className="admin-edit-btn">تعديل</button>
+              <button onClick={() => handleDelete(product.id)} className="admin-delete-btn">حذف</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
