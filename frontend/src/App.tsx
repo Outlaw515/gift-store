@@ -12,6 +12,7 @@ import CustomGiftsPage from './pages/CustomGiftsPage';
 import AdminPage from './pages/AdminPage';
 import ShopPage from './pages/ShopPage';
 import './App.css';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 function HomePage() {
   return (
@@ -39,7 +40,9 @@ function App() {
           <Route path="/custom-gifts" element={<CustomGiftsPage />} />
         <Route path="/admin" element={<AdminPage />} /> 
         <Route path="/shop" element={<ShopPage />} /> 
+        <Route path="/product/:id" element={<ProductDetailPage />} />
         </Routes>
+
       </main>
       <Footer />
       <CartButton />

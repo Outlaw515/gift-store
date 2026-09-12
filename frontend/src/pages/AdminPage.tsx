@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Product } from '../types/Product';
+import { X } from 'lucide-react';
 
 const API_URL = 'http://localhost:5144/api/products';
 const UPLOAD_URL = 'http://localhost:5144/api/upload';
@@ -170,7 +171,31 @@ function AdminPage() {
           <input type="file" accept="image/*" onChange={handleFileUpload} />
           {uploading && <span>جاري الرفع...</span>}
           {imageUrl && (
-            <img src={imageUrl} alt="معاينة" style={{ maxWidth: '150px', marginTop: '0.5rem', borderRadius: '8px' }} />
+            <div style={{ position: 'relative', display: 'inline-block', marginTop: '0.5rem' }}>
+              <img src={imageUrl} alt="معاينة" style={{ maxWidth: '150px', borderRadius: '8px', display: 'block' }} />
+              <button
+                type="button"
+                onClick={() => setImageUrl('')}
+                title="حذف الصورة"
+                style={{
+                  position: 'absolute',
+                  top: '-8px',
+                  left: '-8px',
+                  background: '#4A2A16',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                }}
+              >
+                <X size={14} />
+              </button>
+            </div>
           )}
         </label>
         <label>

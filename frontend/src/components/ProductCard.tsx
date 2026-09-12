@@ -2,6 +2,7 @@ import type { Product } from '../types/Product';
 import { ShoppingCart, Check, Heart, Gift } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
   product: Product;
@@ -19,7 +20,7 @@ function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div className="product-card">
-      <div className="product-image-placeholder">
+      <Link to={`/product/${product.id}`} className="product-image-placeholder">
         {product.category && (
           <span className="category-badge">{product.category}</span>
         )}
@@ -30,11 +31,17 @@ function ProductCard({ product }: ProductCardProps) {
             <Gift size={40} />
           </div>
         )}
-        <button className="wishlist-btn" title="أضف للمفضلة">
+        <button
+          className="wishlist-btn"
+          title="أضف للمفضلة"
+          onClick={(e) => e.preventDefault()}
+        >
           <Heart size={16} />
         </button>
-      </div>
-      <h3>{product.name}</h3>
+      </Link>
+      <Link to={`/product/${product.id}`} className="product-name-link">
+        <h3>{product.name}</h3>
+      </Link>
       <div className="product-footer">
         <button onClick={handleAddToCart} className="add-to-cart-btn" title="أضف للسلة">
           {added ? <Check size={18} /> : <ShoppingCart size={18} />}
