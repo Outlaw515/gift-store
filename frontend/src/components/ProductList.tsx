@@ -4,9 +4,10 @@ import ProductCard from './ProductCard';
 
 interface ProductListProps {
   category?: string;
+  search?: string;
 }
 
-function ProductList({ category }: ProductListProps) {
+function ProductList({ category, search }: ProductListProps) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,12 +33,18 @@ function ProductList({ category }: ProductListProps) {
   if (loading) return <p>Loading products...</p>;
   if (error) return <p>Error: {error}</p>;
 
-  const filtered = category
+  let filtered = category
     ? products.filter((p) => p.category === category)
     : products;
 
+  if (search) {
+    filtered = filtered.filter((p) =>
+      p.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
   if (filtered.length === 0) {
-    return <p className="no-products">لا توجد منتجات في هذه الفئة حالياً</p>;
+    return <p className="no-products">لا توجد منتجات مطابقة حالياً</p>;
   }
 
   return (

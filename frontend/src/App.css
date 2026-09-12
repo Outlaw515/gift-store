@@ -616,3 +616,27 @@ body {
   cursor: pointer;
   font-size: 0.8rem;
 }
+
+.search-bar-wrap {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid #D8C5B5;
+}
+
+.search-bar-wrap input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #D8C5B5;
+  border-radius: 6px;
+  font-family: 'Cairo', sans-serif;
+}
+
+.search-bar-wrap button {
+  background-color: #8B5E3C;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}

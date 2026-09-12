@@ -1,11 +1,24 @@
+import { useState } from 'react';
 import { ShoppingCart, User, Search, MessageCircle, Camera } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { getWhatsAppLink, getInstagramLink } from '../config';
 
 function Header() {
   const { totalItems } = useCart();
+  const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const generalMessage = 'مرحباً، عندي فكرة هدية خاصة أبي أستفسر عنها';
+
+  function handleSearchSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(searchTerm.trim())}`);
+      setSearchOpen(false);
+      setSearchTerm('');
+    }
+  }
 
   return (
     <header className="site-header">
@@ -27,7 +40,7 @@ function Header() {
             {totalItems > 0 && <span className="cart-mini-badge">{totalItems}</span>}
           </div>
           <User size={20} />
-          <Search size={20} />
+          <Search size={20} onClick={() => setSearchOpen((prev) => !prev)} style={{ cursor: 'pointer' }} />
         </div>
         <nav className="header-nav">
           <Link to="/">الرئيسية</Link>
@@ -42,6 +55,18 @@ function Header() {
           </Link>
         </div>
       </div>
+      {searchOpen && (
+        <form onSubmit={handleSearchSubmit} className="search-bar-wrap">
+          <input
+            type="text"
+            autoFocus
+            placeholder="ابحث عن منتج..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button type="submit">بحث</button>
+        </form>
+      )}
     </header>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { Product } from '../types/Product';
 
 const API_URL = 'http://localhost:5144/api/products';
+const UPLOAD_URL = 'http://localhost:5144/api/upload';
 
 function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -16,6 +17,7 @@ function AdminPage() {
   const [imageUrl, setImageUrl] = useState('');
   const [category, setCategory] = useState('هدايا جاهزة');
   const [message, setMessage] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (authenticated) loadProducts();
@@ -47,6 +49,31 @@ function AdminPage() {
     setImageUrl(product.imageUrl || '');
     setCategory(product.category || 'هدايا جاهزة');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch(UPLOAD_URL, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error();
+
+      const data = await response.json();
+      setImageUrl(data.url);
+    } catch {
+      setMessage('فشل رفع الصورة');
+    } finally {
+      setUploading(false);
+    }
   }
 
   async function handleDelete(id: string) {
@@ -139,8 +166,12 @@ function AdminPage() {
           <input type="number" value={stockQuantity} onChange={(e) => setStockQuantity(e.target.value)} required />
         </label>
         <label>
-          رابط الصورة (اختياري)
-          <input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." />
+          صورة المنتج
+          <input type="file" accept="image/*" onChange={handleFileUpload} />
+          {uploading && <span>جاري الرفع...</span>}
+          {imageUrl && (
+            <img src={imageUrl} alt="معاينة" style={{ maxWidth: '150px', marginTop: '0.5rem', borderRadius: '8px' }} />
+          )}
         </label>
         <label>
           الفئة
