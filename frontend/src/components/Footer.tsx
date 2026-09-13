@@ -1,29 +1,32 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getWhatsAppLink, getInstagramLink } from '../config';
 
 function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="site-footer">
       <div className="footer-col footer-brand">
         <img src="/src/assets/logo.jpg" alt="ROSA" className="footer-logo" />
-        <p>نحن في روزا نؤمن أن الهدية ليست مجرد شيء، بل رسالة من القلب</p>
+        <p>{t('footer.tagline')}</p>
       </div>
       <div className="footer-col">
-        <h5>روابط المتجر</h5>
-        <Link to="/shop">المتجر</Link>
-        <Link to="/custom-gifts">الهدايا المخصصة</Link>
-        <Link to="/contact">سياسة التوصيل</Link>
+        <h5>{t('footer.shopLinks')}</h5>
+        <Link to="/shop">{t('footer.shop')}</Link>
+        <Link to="/custom-gifts">{t('footer.customGifts')}</Link>
+        <Link to="/contact">{t('footer.deliveryPolicy')}</Link>
       </div>
       <div className="footer-col">
-        <h5>معلومات</h5>
-        <Link to="/about">من نحن</Link>
-        <Link to="/contact">اتصل بنا</Link>
-        <Link to="/about">الشروط والأحكام</Link>
+        <h5>{t('footer.info')}</h5>
+        <Link to="/about">{t('footer.aboutUs')}</Link>
+        <Link to="/contact">{t('footer.contactUsLink')}</Link>
+        <Link to="/about">{t('footer.terms')}</Link>
       </div>
       <div className="footer-col">
-        <h5>تواصل معنا</h5>
-        <a href={getWhatsAppLink('مرحباً')} target="_blank" rel="noopener noreferrer">واتساب</a>
-        <a href={getInstagramLink()} target="_blank" rel="noopener noreferrer">انستقرام</a>
+        <h5>{t('footer.contactUs')}</h5>
+        <a href={getWhatsAppLink('مرحباً')} target="_blank" rel="noopener noreferrer">{t('footer.whatsapp')}</a>
+        <a href={getInstagramLink()} target="_blank" rel="noopener noreferrer">{t('footer.instagram')}</a>
       </div>
     </footer>
   );

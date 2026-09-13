@@ -34,12 +34,14 @@ function ProductList({ category, search }: ProductListProps) {
   if (error) return <p>Error: {error}</p>;
 
   let filtered = category
-    ? products.filter((p) => p.category === category)
+    ? products.filter((p) => p.category === category || p.categoryEn === category)
     : products;
 
   if (search) {
-    filtered = filtered.filter((p) =>
-      p.name.toLowerCase().includes(search.toLowerCase())
+    filtered = filtered.filter(
+      (p) =>
+        p.name.toLowerCase().includes(search.toLowerCase()) ||
+        (p.nameEn && p.nameEn.toLowerCase().includes(search.toLowerCase()))
     );
   }
 

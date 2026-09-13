@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "shop": "المتجر",
+    "customGifts": "الهدايا المخصصة",
+    "about": "من نحن",
+    "contact": "اتصل بنا"
+  },
+  "header": {
+    "delivery": "توصيل داخل مدينة تريم",
+    "searchPlaceholder": "ابحث عن منتج...",
+    "searchButton": "بحث"
+  },
+ "cart": {
+  "title": "سلتك",
+  "sendOrder": "إرسال الطلب عبر واتساب",
+  "empty": "السلة فارغة",
+  "remove": "حذف",
+  "cartTitle": "السلة"
+
+  },
+  "hero": {
+    "title": "هدايا تُعبّر عنك",
+    "subtitle": "اختر من مجموعتنا المميزة من الهدايا التي تضيف لمسة خاصة لكل مناسبة",
+    "shopNow": "تسوق الآن"
+  },
+  "categories": {
+    "readyGifts": "هدايا جاهزة",
+    "bouquets": "باقات الورد",
+    "perfumes": "العطور",
+    "chocolate": "الشوكولاتة",
+    "shopNow": "تسوق الآن"
+  },
+  "featured": {
+    "title": "منتجات مميزة"
+  },
+  "comingSoonSection": {
+    "title": "الهدايا حسب المناسبة"
+  },
+  "comingSoon": {
+    "text": "هذا القسم قيد التجهيز، ترقبوه قريباً"
+  },
+  "footer": {
+    "tagline": "نحن في روزا نؤمن أن الهدية ليست مجرد شيء، بل رسالة من القلب",
+    "shopLinks": "روابط المتجر",
+    "shop": "المتجر",
+    "customGifts": "الهدايا المخصصة",
+    "deliveryPolicy": "سياسة التوصيل",
+    "info": "معلومات",
+    "aboutUs": "من نحن",
+    "contactUsLink": "اتصل بنا",
+    "terms": "الشروط والأحكام",
+    "contactUs": "تواصل معنا",
+    "whatsapp": "واتساب",
+    "instagram": "انستقرام"
+  },
+ "product": {
+  "currency": "ر.ي",
+  "inStock": "متوفر ({{count}})",
+  "outOfStock": "غير متوفر حالياً",
+  "noCategory": "بدون فئة"
+},
+
+"common": {
+  "addToCart": "أضف للسلة",
+  "loading": "جاري التحميل...",
+  "back": "الرجوع للمتجر",
+  "addToFavorites": "أضف للمفضلة"
+},
+"shop": {
+  "allProducts": "جميع المنتجات",
+  "searchResults": "نتائج البحث عن:"
+},
+"favoritesPage": {
+  "title": "المفضلة",
+  "empty": "قائمة المفضلة فارغة"
+}
+}

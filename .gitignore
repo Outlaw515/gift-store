@@ -12,3 +12,5 @@ dist/
 !.vscode/extensions.json
 .DS_Store
 Thumbs.db
+GiftStore.Api/wwwroot/uploads/*
+!GiftStore.Api/wwwroot/uploads/.gitkeep

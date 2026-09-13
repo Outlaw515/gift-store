@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "customGifts": "Custom Gifts",
+    "about": "About Us",
+    "contact": "Contact Us"
+  },
+  "header": {
+    "delivery": "Delivery within Tarim city",
+    "searchPlaceholder": "Search for a product...",
+    "searchButton": "Search"
+  },
+
+ "cart": {
+  "title": "Your Cart",
+  "sendOrder": "Send Order via WhatsApp",
+  "empty": "Cart is empty",
+  "remove": "Remove",
+  "cartTitle": "Cart"
+},
+  "hero": {
+    "title": "Gifts That Speak For You",
+    "subtitle": "Choose from our curated collection of gifts that add a special touch to every occasion",
+    "shopNow": "Shop Now"
+  },
+  "categories": {
+    "readyGifts": "Ready Gifts",
+    "bouquets": "Flower Bouquets",
+    "perfumes": "Perfumes",
+    "chocolate": "Chocolate",
+    "shopNow": "Shop Now"
+  },
+  "featured": {
+    "title": "Featured Products"
+  },
+  "comingSoonSection": {
+    "title": "Gifts by Occasion"
+  },
+  "comingSoon": {
+    "text": "This section is coming soon, stay tuned"
+  },
+  "footer": {
+    "tagline": "At ROSA, we believe a gift is more than an item — it's a message from the heart",
+    "shopLinks": "Shop Links",
+    "shop": "Shop",
+    "customGifts": "Custom Gifts",
+    "deliveryPolicy": "Delivery Policy",
+    "info": "Information",
+    "aboutUs": "About Us",
+    "contactUsLink": "Contact Us",
+    "terms": "Terms & Conditions",
+    "contactUs": "Contact Us",
+    "whatsapp": "WhatsApp",
+    "instagram": "Instagram"
+  },
+"product": {
+  "currency": "YER",
+  "inStock": "In stock ({{count}})",
+  "outOfStock": "Currently unavailable",
+  "noCategory": "Uncategorized"
+},
+
+"common": {
+  "addToCart": "Add to Cart",
+  "loading": "Loading...",
+  "back": "Back to Shop",
+  "addToFavorites": "Add to Favorites"
+},
+"shop": {
+  "allProducts": "All Products",
+  "searchResults": "Search results for:"
+},
+"favoritesPage": {
+  "title": "Favorites",
+  "empty": "Your favorites list is empty"
+}
+}

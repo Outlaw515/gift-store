@@ -5,6 +5,13 @@ import { X } from 'lucide-react';
 const API_URL = 'http://localhost:5144/api/products';
 const UPLOAD_URL = 'http://localhost:5144/api/upload';
 
+const CATEGORY_EN_MAP: Record<string, string> = {
+  'هدايا جاهزة': 'Ready Gifts',
+  'باقات الورد': 'Flower Bouquets',
+  'العطور': 'Perfumes',
+  'الشوكولاتة': 'Chocolate',
+};
+
 function AdminPage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
@@ -13,6 +20,8 @@ function AdminPage() {
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [nameEn, setNameEn] = useState('');
+  const [descriptionEn, setDescriptionEn] = useState('');
   const [price, setPrice] = useState('');
   const [stockQuantity, setStockQuantity] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -35,6 +44,8 @@ function AdminPage() {
     setEditingId(null);
     setName('');
     setDescription('');
+    setNameEn('');
+    setDescriptionEn('');
     setPrice('');
     setStockQuantity('');
     setImageUrl('');
@@ -45,6 +56,8 @@ function AdminPage() {
     setEditingId(product.id);
     setName(product.name);
     setDescription(product.description);
+    setNameEn(product.nameEn || '');
+    setDescriptionEn(product.descriptionEn || '');
     setPrice(String(product.price));
     setStockQuantity(String(product.stockQuantity));
     setImageUrl(product.imageUrl || '');
@@ -97,10 +110,13 @@ function AdminPage() {
     const payload = {
       name,
       description,
+      nameEn: nameEn || null,
+      descriptionEn: descriptionEn || null,
       price: parseFloat(price),
       stockQuantity: parseInt(stockQuantity),
       imageUrl: imageUrl || null,
       category,
+      categoryEn: CATEGORY_EN_MAP[category] || null,
     };
 
     try {
@@ -151,12 +167,20 @@ function AdminPage() {
       <h2>{editingId ? 'تعديل منتج' : 'إضافة منتج جديد'}</h2>
       <form onSubmit={handleSubmit} className="admin-form">
         <label>
-          اسم المنتج
+          اسم المنتج (عربي)
           <input value={name} onChange={(e) => setName(e.target.value)} required />
         </label>
         <label>
-          الوصف
+          Product Name (English) — اختياري
+          <input value={nameEn} onChange={(e) => setNameEn(e.target.value)} placeholder="e.g. Rose Bouquet" />
+        </label>
+        <label>
+          الوصف (عربي)
           <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+        </label>
+        <label>
+          Description (English) — اختياري
+          <textarea value={descriptionEn} onChange={(e) => setDescriptionEn(e.target.value)} placeholder="e.g. A beautiful arrangement of fresh roses..." />
         </label>
         <label>
           السعر

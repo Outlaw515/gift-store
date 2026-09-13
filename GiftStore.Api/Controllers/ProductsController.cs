@@ -26,10 +26,13 @@ public class ProductsController : ControllerBase
                 Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
+                NameEn = p.NameEn,
+                DescriptionEn = p.DescriptionEn,
                 Price = p.Price,
                 StockQuantity = p.StockQuantity,
                 ImageUrl = p.ImageUrl,
-                Category = p.Category
+                Category = p.Category,
+                CategoryEn = p.CategoryEn
             })
             .ToListAsync();
 
@@ -44,10 +47,13 @@ public class ProductsController : ControllerBase
             Id = Guid.NewGuid(),
             Name = dto.Name,
             Description = dto.Description,
+            NameEn = dto.NameEn,
+            DescriptionEn = dto.DescriptionEn,
             Price = dto.Price,
             StockQuantity = dto.StockQuantity,
             ImageUrl = dto.ImageUrl,
             Category = dto.Category,
+            CategoryEn = dto.CategoryEn,
             CreatedAt = DateTime.UtcNow
         };
 
@@ -73,10 +79,13 @@ public class ProductsController : ControllerBase
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
+            NameEn = product.NameEn,
+            DescriptionEn = product.DescriptionEn,
             Price = product.Price,
             StockQuantity = product.StockQuantity,
             ImageUrl = product.ImageUrl,
-            Category = product.Category
+            Category = product.Category,
+            CategoryEn = product.CategoryEn
         };
 
         return Ok(dto);
@@ -94,10 +103,13 @@ public class ProductsController : ControllerBase
 
         product.Name = dto.Name;
         product.Description = dto.Description;
+        product.NameEn = dto.NameEn;
+        product.DescriptionEn = dto.DescriptionEn;
         product.Price = dto.Price;
         product.StockQuantity = dto.StockQuantity;
         product.ImageUrl = dto.ImageUrl;
         product.Category = dto.Category;
+        product.CategoryEn = dto.CategoryEn;
 
         await _context.SaveChangesAsync();
 
