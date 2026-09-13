@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import type { Product } from '../types/Product';
 import { X } from 'lucide-react';
+import { API_URL as BASE_URL } from '../config';
 
-const API_URL = 'http://localhost:5144/api/products';
-const UPLOAD_URL = 'http://localhost:5144/api/upload';
+const API_URL = `${BASE_URL}/api/products`;
+const UPLOAD_URL = `${BASE_URL}/api/upload`;
 
 const CATEGORY_EN_MAP: Record<string, string> = {
   'هدايا جاهزة': 'Ready Gifts',

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Product } from '../types/Product';
 import ProductCard from './ProductCard';
+import { API_URL } from '../config';
 
 interface ProductListProps {
   category?: string;
@@ -13,7 +14,7 @@ function ProductList({ category, search }: ProductListProps) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('http://localhost:5144/api/products')
+    fetch(`${API_URL}/api/products`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch products');

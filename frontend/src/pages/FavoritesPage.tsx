@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Product } from '../types/Product';
 import { useFavorites } from '../context/FavoritesContext';
 import ProductCard from '../components/ProductCard';
+import { API_URL } from '../config';
 
 function FavoritesPage() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ function FavoritesPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5144/api/products')
+    fetch(`${API_URL}/api/products`)
       .then((res) => res.json())
       .then((data: Product[]) => {
         setProducts(data);

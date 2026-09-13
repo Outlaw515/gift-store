@@ -1,3 +1,5 @@
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5144';
+
 export const WHATSAPP_NUMBER = '967771674456';
 export const INSTAGRAM_USERNAME = 'your_instagram_handle';
 

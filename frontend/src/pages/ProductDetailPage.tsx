@@ -5,6 +5,7 @@ import type { Product } from '../types/Product';
 import { useCart } from '../context/CartContext';
 import { Gift, ShoppingCart, Check, ArrowRight } from 'lucide-react';
 import { getLocalizedName, getLocalizedDescription, getLocalizedCategory } from '../utils/localizeProduct';
+import { API_URL } from '../config';
 
 function ProductDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -16,7 +17,7 @@ function ProductDetailPage() {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch(`http://localhost:5144/api/products/${id}`)
+    fetch(`${API_URL}/api/products/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error('المنتج غير موجود');
         return res.json();
