@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using GiftStore.Api.DTOs;
 using GiftStore.Domain;
 using GiftStore.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GiftStore.Api.Controllers;
 
@@ -39,6 +40,7 @@ public class ProductsController : ControllerBase
         return Ok(products);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<ProductDto>> CreateProduct(ProductDto dto)
     {
@@ -91,6 +93,7 @@ public class ProductsController : ControllerBase
         return Ok(dto);
     }
 
+    [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProduct(Guid id, ProductDto dto)
     {
@@ -116,6 +119,7 @@ public class ProductsController : ControllerBase
         return NoContent();
     }
 
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteProduct(Guid id)
     {

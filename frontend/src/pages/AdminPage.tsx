@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import type { Product } from '../types/Product';
 import { X } from 'lucide-react';
 import { API_URL as BASE_URL } from '../config';
+import { saveToken, getToken, clearToken, isLoggedIn } from '../utils/auth';
 
 const API_URL = `${BASE_URL}/api/products`;
 const UPLOAD_URL = `${BASE_URL}/api/upload`;
+const LOGIN_URL = `${BASE_URL}/api/auth/login`;
 
 const CATEGORY_EN_MAP: Record<string, string> = {
   'هدايا جاهزة': 'Ready Gifts',
@@ -14,8 +16,10 @@ const CATEGORY_EN_MAP: Record<string, string> = {
 };
 
 function AdminPage() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(isLoggedIn());
   const [passwordInput, setPasswordInput] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [loggingIn, setLoggingIn] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -39,6 +43,43 @@ function AdminPage() {
       .then((res) => res.json())
       .then((data: Product[]) => setProducts(data))
       .catch(() => setMessage('فشل تحميل المنتجات'));
+  }
+
+  async function handleLogin() {
+    setLoginError('');
+    setLoggingIn(true);
+
+    try {
+      const response = await fetch(LOGIN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput }),
+      });
+
+      if (!response.ok) {
+        setLoginError('كلمة المرور غير صحيحة');
+        return;
+      }
+
+      const data = await response.json();
+      saveToken(data.token);
+      setAuthenticated(true);
+    } catch {
+      setLoginError('تعذر الاتصال بالسيرفر');
+    } finally {
+      setLoggingIn(false);
+    }
+  }
+
+  function handleLogout() {
+    clearToken();
+    setAuthenticated(false);
+    setPasswordInput('');
+  }
+
+  function authHeaders(): HeadersInit {
+    const token = getToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
   function resetForm() {
@@ -77,8 +118,15 @@ function AdminPage() {
     try {
       const response = await fetch(UPLOAD_URL, {
         method: 'POST',
+        headers: authHeaders(),
         body: formData,
       });
+
+      if (response.status === 401) {
+        handleLogout();
+        setMessage('انتهت صلاحية الجلسة، سجّل الدخول من جديد');
+        return;
+      }
 
       if (!response.ok) throw new Error();
 
@@ -95,8 +143,19 @@ function AdminPage() {
     if (!confirm('هل أنت متأكد من حذف هذا المنتج؟')) return;
 
     try {
-      const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+        headers: authHeaders(),
+      });
+
+      if (response.status === 401) {
+        handleLogout();
+        setMessage('انتهت صلاحية الجلسة، سجّل الدخول من جديد');
+        return;
+      }
+
       if (!response.ok) throw new Error();
+
       setMessage('تم حذف المنتج بنجاح');
       loadProducts();
     } catch {
@@ -126,9 +185,18 @@ function AdminPage() {
 
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...authHeaders(),
+        },
         body: JSON.stringify(payload),
       });
+
+      if (response.status === 401) {
+        handleLogout();
+        setMessage('انتهت صلاحية الجلسة، سجّل الدخول من جديد');
+        return;
+      }
 
       if (!response.ok) throw new Error();
 
@@ -149,23 +217,28 @@ function AdminPage() {
           placeholder="كلمة المرور"
           value={passwordInput}
           onChange={(e) => setPasswordInput(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+          autoComplete="new-password"
         />
         <button
-          onClick={() => {
-            if (passwordInput === 'rosa2026') setAuthenticated(true);
-          }}
+          onClick={handleLogin}
+          disabled={loggingIn}
           className="admin-submit-btn"
           style={{ marginRight: '0.5rem' }}
         >
-          دخول
+          {loggingIn ? 'جاري التحقق...' : 'دخول'}
         </button>
+        {loginError && <p className="admin-message">{loginError}</p>}
       </div>
     );
   }
 
   return (
     <div className="static-page">
-      <h2>{editingId ? 'تعديل منتج' : 'إضافة منتج جديد'}</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <h2>{editingId ? 'تعديل منتج' : 'إضافة منتج جديد'}</h2>
+        <button onClick={handleLogout} className="admin-cancel-btn">تسجيل الخروج</button>
+      </div>
       <form onSubmit={handleSubmit} className="admin-form">
         <label>
           اسم المنتج (عربي)
